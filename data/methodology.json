@@ -1,0 +1,27 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-10-07",
+  "directLostHours": 44,
+  "emotionalCognitiveFraction": 0.01,
+  "annualFteHours": 2080,
+  "projectionYears": 5,
+  "preferredWageYear": 2025,
+  "workforceDatasets": [],
+  "densityDatasetYear": 2018,
+  "wageHierarchy": [
+    "County + target industry",
+    "State + target industry",
+    "National + target industry",
+    "County + all industries",
+    "State + all industries"
+  ],
+  "notes": [
+    "44 hours is an industry-research-based model assumption, not a government statistic or guaranteed loss.",
+    "The 1.0% emotional/cognitive allowance is a research-informed modeling assumption. No cited study measures exactly 1.0% annual workplace loss from zero cellular coverage.",
+    "Adding direct and cognitive hours assumes distinct effects. Their overlap has not been measured, so the combined estimate may overstate loss if effects overlap.",
+    "Employee exposure is assumed proportional to the share of building space without usable cellular service. Actual employee locations and time spent may differ.",
+    "Hourly wage equals annual average pay divided by 2,080. This is a wage-only approximation; QCEW includes both full-time and part-time workers.",
+    "Main-shift workforce proxies are not measured annual FTEs. Applying annual hours to these counts is a modeling assumption. No shift multiplier is used.",
+    "The five-year estimate assumes current workforce, coverage conditions, productivity assumptions, and wage rates remain unchanged. No inflation, wage growth, discounting or compounding is applied."
+  ]
+}

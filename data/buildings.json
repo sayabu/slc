@@ -1,0 +1,127 @@
+[
+  {
+    "id": "hospital",
+    "label": "Hospital",
+    "industries": ["622110", "622"],
+    "ownership": "5",
+    "density": 628,
+    "densityCategory": "Inpatient health care",
+    "densityNote": "Main-shift proxy; no adjustment for round-the-clock operations.",
+    "layer2": [
+      "Patient experience",
+      "Visitor experience",
+      "Patient recommendation / reputation",
+      "Service recovery",
+      "HCAHPS-related financial exposure",
+      "Patient choice"
+    ]
+  },
+  {
+    "id": "office",
+    "label": "Office",
+    "industries": ["10"],
+    "ownership": "0",
+    "density": 507,
+    "densityCategory": "Office",
+    "densityNote": "Office activity is not a single industry. All-industry wages are the default.",
+    "layer2": [
+      "Visitor / client experience",
+      "Customer service",
+      "Employee satisfaction",
+      "Recruiting / retention"
+    ]
+  },
+  {
+    "id": "k12",
+    "label": "K-12 School",
+    "industries": ["611110", "6111"],
+    "ownership": "3",
+    "density": 1314,
+    "densityCategory": "Education",
+    "densityNote": "Broad education proxy, not a K-12-specific staffing ratio. Local-government wages represent public schools.",
+    "layer2": [
+      "Parent experience",
+      "School communication",
+      "Staff communication",
+      "Student / visitor experience"
+    ]
+  },
+  {
+    "id": "university",
+    "label": "University",
+    "industries": ["611310", "6113"],
+    "ownership": "2",
+    "density": 1314,
+    "densityCategory": "Education",
+    "densityNote": "Broad education proxy, not institution-specific staffing. State-government wages represent public universities.",
+    "layer2": [
+      "Student experience",
+      "Parent experience",
+      "Campus reputation",
+      "Recruitment / retention"
+    ]
+  },
+  {
+    "id": "manufacturing",
+    "label": "Manufacturing Plant",
+    "industries": ["31-33"],
+    "ownership": "5",
+    "density": null,
+    "densityCategory": null,
+    "densityNote": "CBECS does not cover industrial manufacturing buildings. Enter FTE or headcount; no unsupported density is supplied.",
+    "layer2": [
+      "Supplier / customer communication",
+      "Production coordination",
+      "SLA / service consequences",
+      "Service recovery"
+    ]
+  },
+  {
+    "id": "warehouse",
+    "label": "Warehouse / Distribution Center",
+    "industries": ["493", "4931"],
+    "ownership": "5",
+    "density": 2222,
+    "densityCategory": "Warehouse and storage",
+    "densityNote": "Broad warehouse/storage main-shift proxy; actual distribution staffing can vary.",
+    "layer2": [
+      "Fulfillment communication",
+      "Driver / carrier coordination",
+      "Customer service",
+      "Service recovery",
+      "SLA penalties"
+    ]
+  },
+  {
+    "id": "hotel",
+    "label": "Hotel",
+    "industries": ["721110", "7211"],
+    "ownership": "5",
+    "density": 2431,
+    "densityCategory": "Lodging",
+    "densityNote": "Broad lodging main-shift proxy. No shift multiplier.",
+    "layer2": [
+      "Guest experience",
+      "Connectivity complaints",
+      "Online reviews / reputation",
+      "ADR / occupancy / RevPAR",
+      "Refunds / comped stays",
+      "Guest retention"
+    ]
+  },
+  {
+    "id": "government",
+    "label": "Government Building",
+    "industries": ["92"],
+    "ownership": "3",
+    "density": 507,
+    "densityCategory": "Office",
+    "densityNote": "Office proxy applies to administrative government buildings only. Enter staff counts for other uses. Local-government public administration wages are the default.",
+    "layer2": [
+      "Citizen experience",
+      "Repeated service contacts",
+      "Staff assistance",
+      "Service-delivery delays"
+    ]
+  }
+]

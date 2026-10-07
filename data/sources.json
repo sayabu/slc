@@ -1,0 +1,90 @@
+[
+  {
+    "id": "qcew",
+    "organization": "U.S. Bureau of Labor Statistics",
+    "name": "QCEW annual-average data slices",
+    "year": "2025 (configured target)",
+    "url": "https://www.bls.gov/cew/additional-resources/open-data/csv-data-slices.htm",
+    "use": "Annual average pay by county, state or nation and industry / ownership",
+    "category": "Government data",
+    "note": "Only disclosed annual-average records are accepted. Cache availability is reported separately. Ownership is selected explicitly; public school, public university and local public administration defaults may not match every employer.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "census",
+    "organization": "U.S. Census Bureau",
+    "name": "Census Geocoding Services API",
+    "year": "Current benchmark / vintage",
+    "url": "https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html",
+    "use": "Matched address, state and county FIPS",
+    "category": "Government data",
+    "note": "Address-range match only; does not prove building existence or estimate indoor RF coverage. Application supports 50 states and DC.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "cbecs",
+    "organization": "U.S. Energy Information Administration",
+    "name": "2018 CBECS, Table B1: Summary of floorspace, workers and operating hours",
+    "year": "2018; revised September 2022",
+    "url": "https://www.eia.gov/consumption/commercial/data/2018/bc/html/b1.php",
+    "use": "Published square feet per main-shift worker",
+    "category": "Government data",
+    "note": "Office 507; inpatient 628; education 1,314; lodging 2,431; warehouse/storage 2,222. Education and lodging are broad proxies. Administrative government buildings use office proxy. Industrial manufacturing is not covered. No shift multiplier.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "industry44",
+    "organization": "SignalBoosters.com / Coleman Parkes Research",
+    "name": "In-Building Mobile Connectivity Report",
+    "year": "2019 per project brief; publication date not independently confirmed on report page",
+    "url": "https://www.signalboosters.com/resources/whitepapers/in-building-mobile-connectivity-report/",
+    "use": "44 direct lost hours per fully affected workforce equivalent per year",
+    "category": "Industry research",
+    "note": "Survey of 500 managers; industry-sponsored report describes up to 44 hours. Used as an assumption, not a causal workplace measurement or guaranteed outcome. Report revenue estimates are not used.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "iself",
+    "organization": "Clayton, Leshner and Almond; Journal of Computer-Mediated Communication",
+    "name": "The Extended iSelf: The Impact of iPhone Separation on Cognition, Emotion, and Physiology",
+    "year": "2015",
+    "url": "https://doi.org/10.1111/jcc4.12109",
+    "use": "Context for separation anxiety, physiological stress and cognitive distraction",
+    "category": "Peer-reviewed / academic research",
+    "note": "Small laboratory experiment involving an unanswered ringing phone. Does not establish a 1% annual workplace effect or measure indoor dead-zone losses.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "executive",
+    "organization": "Hartanto and Yang; Singapore Management University / Computers in Human Behavior",
+    "name": "Is the smartphone a smart choice? The effect of smartphone separation on executive functions",
+    "year": "2016",
+    "url": "https://smusg.elsevierpure.com/en/publications/is-the-smartphone-a-smart-choice-the-effect-of-smartphone-separat/",
+    "use": "Context for anxiety, working memory, inhibition and task switching",
+    "category": "Peer-reviewed / academic research",
+    "note": "Experimental separation findings support a possible mechanism, not an annual loss rate. No direct translation from experiment to 1% is claimed.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "model",
+    "organization": "Quiet Financial Loss Calculator methodology",
+    "name": "Baseline model version 2.0",
+    "year": "2026",
+    "url": "/methodology",
+    "use": "44 direct hours; 1% cognitive allowance; 2,080 hours; proportional exposure; unchanged five-year projection",
+    "category": "Model assumptions",
+    "note": "The defaults are editable in data/methodology.json. Cognitive hours are derived, not stored separately. Additive components may overlap. Input quality labels are not confidence intervals.",
+    "lastVerified": "2026-10-07"
+  },
+  {
+    "id": "inputs",
+    "organization": "Facility user",
+    "name": "Facility and building inputs",
+    "year": "At calculation time",
+    "url": "/",
+    "use": "Address, building type, gross area, coverage, FTE/headcount and Wi-Fi context",
+    "category": "User inputs",
+    "note": "User controls coverage. FTE overrides headcount and proxies. Inputs are not independently measured or audited by this application.",
+    "lastVerified": "2026-10-07"
+  }
+]

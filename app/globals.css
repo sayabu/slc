@@ -1,0 +1,491 @@
+/* MCA Signal: supplied Theme 02, adapted from presentation to web scale. */
+:root {
+  --yellow: #ffdd44;
+  --orange: #fa6404;
+  --blue: #68cbf8;
+  --rose: #e45863;
+  --ink: #141414;
+  --paper: #fff;
+  --canvas: #e8e6e1;
+  --line: #e2ded8;
+  --muted: #4a453e;
+  --title: "Merriweather", Georgia, serif;
+  --body: "Source Sans 3", Arial, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-padding-top: 1.5rem;
+}
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 1.0625rem/1.55 var(--body);
+}
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  overflow-wrap: anywhere;
+}
+a:hover {
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 3px;
+}
+.site-header {
+  background: var(--paper);
+  border-top: 6px solid var(--orange);
+  border-bottom: 1px solid var(--line);
+  padding: 1rem max(1.5rem, calc((100vw - 1200px) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.brand {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.brand img {
+  width: 112px;
+  height: 56px;
+  object-fit: contain;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.75rem;
+}
+nav a {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.65rem 0;
+}
+nav a:hover {
+  border-color: var(--orange);
+}
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+.page-intro {
+  padding: 0 0 1.5rem 1.75rem;
+  border-left: 12px solid var(--yellow);
+  margin: 0.5rem 0 2rem;
+}
+.eyebrow {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin: 0 0 1rem;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--title);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+h1 {
+  text-transform: uppercase;
+  font-size: clamp(2rem, 4.3vw, 3.5rem);
+  margin: 0 0 1.25rem;
+  max-width: 1050px;
+}
+h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  margin: 2.25rem 0 1rem;
+}
+h3 {
+  font-size: 1.3rem;
+  margin: 0 0 1rem;
+}
+p {
+  margin: 0.75rem 0 1rem;
+}
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.subtitle::before {
+  content: "";
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  background: var(--orange);
+  margin-right: 0.65rem;
+}
+.principle {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+fieldset {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--ink);
+  background: var(--paper);
+  margin: 0 0 2rem;
+  padding: 1.5rem 2rem 1.75rem;
+}
+legend {
+  background: var(--ink);
+  color: var(--yellow);
+  max-width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+fieldset:first-of-type {
+  border-top-color: var(--orange);
+}
+fieldset:first-of-type legend {
+  background: var(--yellow);
+  color: var(--ink);
+}
+fieldset:not(:first-of-type) legend {
+  border-left: 8px solid var(--blue);
+}
+fieldset p {
+  color: var(--muted);
+  max-width: 90ch;
+  font-size: 1rem;
+}
+label {
+  display: block;
+  margin: 0.75rem 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+input,
+select,
+button {
+  font: inherit;
+  max-width: 100%;
+  border-radius: 0;
+}
+input:not([type="checkbox"]),
+select {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  margin-top: 0.5rem;
+  border: 1px solid #8a8172;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 48px;
+}
+input:hover,
+select:hover {
+  border-color: var(--ink);
+}
+input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+  accent-color: var(--ink);
+}
+button,
+summary {
+  cursor: pointer;
+}
+button {
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--yellow);
+  padding: 0.85rem 1.5rem;
+  margin: 0.5rem 0.75rem 0.5rem 0;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-height: 48px;
+}
+button[type="submit"] {
+  background: var(--orange);
+  color: var(--ink);
+  border-color: var(--orange);
+}
+button:hover:not(:disabled) {
+  background: var(--yellow);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+button:disabled {
+  cursor: not-allowed;
+  background: var(--line);
+  color: var(--muted);
+  border-color: var(--line);
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2rem;
+}
+.notice {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--ink);
+  border-left: 8px solid var(--blue);
+  background: var(--paper);
+  margin-block: 1.5rem;
+}
+[role="alert"].notice {
+  border-left-color: var(--rose);
+}
+[role="status"]:empty {
+  display: none;
+}
+[aria-label="Calculation results"] {
+  border-top: 8px solid var(--orange);
+  margin-top: 3rem;
+  padding-top: 0.5rem;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin-block: 1.5rem;
+  background: var(--ink);
+  padding: 1rem;
+}
+.metrics p {
+  background: var(--yellow);
+  padding: 1.75rem;
+  margin: 0;
+  font-weight: 700;
+}
+.metrics p:nth-child(2) {
+  background: var(--blue);
+}
+.metrics strong {
+  display: block;
+  font-family: var(--title);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3.3vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+  margin: 1rem 0 0.75rem;
+  overflow-wrap: anywhere;
+}
+article {
+  background: var(--paper);
+  padding: 2rem;
+  margin: 1.5rem 0;
+  border-top: 5px solid var(--ink);
+}
+article h3 {
+  border-left: 6px solid var(--orange);
+  padding-left: 1rem;
+}
+dl {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr);
+  gap: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  margin: 1.5rem 0;
+}
+dt,
+dd {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+dt {
+  font-weight: 700;
+}
+dd {
+  color: var(--muted);
+}
+details {
+  margin: 1rem 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+summary {
+  padding: 1.1rem 1.25rem;
+  font-weight: 700;
+}
+summary:hover {
+  background: var(--yellow);
+}
+details[open] > summary {
+  background: var(--ink);
+  color: var(--yellow);
+}
+details > :not(summary) {
+  margin: 1.25rem;
+}
+details > ul,
+details > ol {
+  padding-left: 1.5rem;
+}
+li {
+  margin-block: 0.6rem;
+  padding-left: 0.2rem;
+}
+.table-scroll {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  background: var(--paper);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1rem;
+}
+caption {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+thead {
+  background: var(--ink);
+  color: var(--paper);
+}
+tbody th {
+  border-left: 4px solid var(--yellow);
+}
+.site-footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2.5rem max(1.5rem, calc((100vw - 1152px) / 2));
+  border-top: 8px solid var(--orange);
+}
+.site-footer p {
+  max-width: 105ch;
+  font-size: 0.95rem;
+}
+.site-footer .eyebrow {
+  color: var(--yellow);
+  font-size: 0.75rem;
+}
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 10;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 1rem;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 7px var(--blue);
+}
+@media (max-width: 640px) {
+  .site-header {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .brand img {
+    width: 88px;
+    height: 44px;
+  }
+  nav {
+    gap: 0.2rem;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  nav a {
+    font-size: 0.7rem;
+    padding: 0.3rem 0;
+  }
+  main {
+    padding: 2rem 1rem;
+  }
+  .page-intro {
+    padding-left: 1rem;
+    border-left-width: 8px;
+  }
+  .desktop-break {
+    display: none;
+  }
+  .subtitle {
+    font-size: 1.125rem;
+  }
+  .fields,
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+  fieldset,
+  article {
+    padding: 1rem;
+  }
+  legend {
+    font-size: 1rem;
+  }
+  .metrics {
+    padding: 0.5rem;
+  }
+  .metrics p {
+    padding: 1.5rem;
+  }
+  dl {
+    grid-template-columns: 1fr;
+  }
+  dt {
+    padding-bottom: 0.25rem;
+    border-bottom: 0;
+  }
+  dd {
+    padding-top: 0.25rem;
+  }
+  button {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 10pt;
+  }
+  form,
+  nav,
+  button,
+  .skip-link,
+  .page-intro {
+    display: none;
+  }
+  main {
+    padding: 0;
+  }
+  article,
+  details {
+    break-inside: avoid;
+  }
+  .metrics,
+  .metrics p,
+  .site-footer {
+    background: white;
+    color: black;
+  }
+}

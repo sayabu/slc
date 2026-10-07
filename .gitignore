@@ -1,0 +1,9 @@
+node_modules/
+.next/
+*.tsbuildinfo
+.env*
+!.env.example
+data/*.tmp
+coverage/
+# Original research reference; not part of the deployed application.
+ppt.Productivity Loss due to Deadzones in Hospital 6-9-25 V4.pdf

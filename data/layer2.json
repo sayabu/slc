@@ -1,0 +1,13 @@
+{
+  "active": false,
+  "requiredInputs": [],
+  "evidenceRequirements": [
+    "Evidence of a cellular-coverage relationship",
+    "Required facility-specific measurements",
+    "Documented review excluding overlap with Layer 1 and other modules"
+  ],
+  "sourceIds": [],
+  "quality": "Not Quantified",
+  "explanation": "Sufficient evidence and facility-specific information are not available. This is not a zero-dollar estimate.",
+  "independentOfLayer1": false
+}
