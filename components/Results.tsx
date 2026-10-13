@@ -1,7 +1,11 @@
+"use client";
+import { useState } from "react";
 import type { BuildingResult, sumCampus } from "@/lib/calculator";
 import type { Geography } from "@/lib/wages";
 import { methodology, cognitiveHours } from "@/lib/methodology";
 import { buildingConfig } from "@/lib/buildings";
+import { scenario, precise as num, dollars as money } from "@/lib/presentation";
+import EquationJourney from "./EquationJourney";
 export type CalculationResponse = {
   geography: Geography;
   buildings: BuildingResult[];
@@ -15,75 +19,116 @@ export type CalculationResponse = {
     downloadedAt: string | null;
   };
 };
-const num = (v: number) =>
-  v.toLocaleString("en-US", { maximumFractionDigits: 2 });
-const money = (v: number | null) =>
-  v === null
-    ? "Unavailable — wage data needed"
-    : v.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      });
-const rate = (v: number | null) =>
-  v === null
-    ? "Unavailable"
-    : v.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 4,
-      });
 export default function Results({ data }: { data: CalculationResponse }) {
-  const c = data.campus;
+  const [cognitive, setCognitive] = useState(false);
+  const complete = data.buildings.every(
+    (r) => r.directConnectivityLoss !== null,
+  );
+  const sum = (include: boolean) =>
+    complete
+      ? data.buildings.reduce((s, r) => s + scenario(r, include).annual!, 0)
+      : null;
+  const annual = sum(cognitive);
   return (
     <>
-      <h2>Estimated Baseline Quiet Financial Loss</h2>
+      <h2>Your campus · a financial scenario</h2>
       <p>{data.geography.matchedAddress}</p>
+      <p className="notice">
+        {data.buildings.every((r) => r.input.coverage === 0)
+          ? "Starting scenario: zero usable cellular coverage throughout every campus building. This is hypothetical unless measured."
+          : "This scenario uses the coverage entered for each building. Those inputs are not independently verified."}{" "}
+        Enter the extent of coverage you may currently have to explore how the
+        result changes.
+      </p>
+      <label className="scenario-choice">
+        <input
+          type="checkbox"
+          checked={cognitive}
+          onChange={(e) => setCognitive(e.target.checked)}
+        />{" "}
+        Include the optional cognitive allowance in this scenario
+      </label>
+      <p>
+        Direct time is the default. The optional 1% allowance adds{" "}
+        {cognitiveHours} hours per fully affected equivalent. The two effects
+        may overlap. Neither is measured at your site.
+      </p>
       <div className="metrics">
         <p>
-          Annual baseline<strong>{money(c.baselineQuietFinancialLoss)}</strong>
-          per year
+          Annual wage-value scenario<strong>{money(annual)}</strong>per year
         </p>
         <p>
-          5-year baseline<strong>{money(c.fiveYearBaselineLoss)}</strong>over{" "}
-          {methodology.projectionYears} years
+          Five-year constant-condition scenario
+          <strong>
+            {money(
+              annual === null ? null : annual * methodology.projectionYears,
+            )}
+          </strong>
+          over {methodology.projectionYears} years
         </p>
       </div>
       <p>
-        <strong>Based on workforce-related loss only.</strong>
+        <strong>
+          Scenario comparison: {money(sum(false))} direct only →{" "}
+          {money(sum(true))} with the optional cognitive allowance, per year.
+        </strong>{" "}
+        This compares assumptions. It is not a statistical confidence interval
+        or a guaranteed minimum. Actual loss may be lower, including zero.
       </p>
-      {!c.complete && (
+      {!complete && (
         <p className="notice">
-          The campus dollar total is unavailable because one or more buildings
-          have no usable wage record after all configured fallbacks. Lost hours
-          are still shown. Missing values are not treated as $0.
+          The campus dollar total is unavailable because at least one building
+          has no usable wage record. Missing values are not treated as $0.
         </p>
       )}
       <p>
-        This estimate does not include potential financial impacts related to
-        customer, patient, student, guest, visitor or citizen experience,
-        service recovery, reputation, reviews, retention or revenue. These
-        impacts are not included because sufficient data were not available to
-        quantify them responsibly.
+        <strong>Workforce-related time only.</strong> This represents possible
+        wage value of lost time, not a measured accounting expense or guaranteed
+        savings. Experience, reputation, service recovery and revenue effects
+        remain Not Quantified.
+      </p>
+      <div className="survey-callout">
+        <p className="eyebrow">The useful next step</p>
+        <h2>
+          Survey the signal.
+          <br />
+          Replace the guess.
+        </h2>
+        <p>
+          Arrange a signal survey of your in-building cellular coverage. Then
+          update each building's coverage input with the survey findings.
+        </p>
+        <a href="#signal-survey">See the survey checklist ↓</a>
+      </div>
+      <p>
+        <strong>Evidence quality:</strong> Staffing{" "}
+        {data.buildings.some(
+          (r) => r.workforce.source === "Building-size benchmark",
+        )
+          ? "uses a broad size-based estimate"
+          : "uses supplied or reviewed counts; confirm their year and scope"}
+        . Wages are published averages, not this site's payroll. Coverage is a
+        user input or hypothetical scenario. Lost-time assumptions are not
+        validated at this site. No percentage probability of accuracy is
+        assigned.
       </p>
       <dl>
         <dt>Total square footage</dt>
-        <dd>{num(c.squareFeet)} sq. ft.</dd>
-        <dt>
-          {data.buildings.every((b) => b.workforce.unit === "FTE")
-            ? "Workforce FTE"
-            : "Combined workforce estimate"}
-        </dt>
-        <dd>{num(c.workforce)} — see individual sources below</dd>
-        <dt>Affected FTE equivalent</dt>
-        <dd>{num(c.affectedFTEEquivalent)} (modeled exposure)</dd>
-        <dt>Direct lost hours</dt>
-        <dd>{num(c.directLostHours)} / year</dd>
-        <dt>Emotional/cognitive lost hours</dt>
-        <dd>{num(c.emotionalLostHours)} / year</dd>
-        <dt>Total lost hours</dt>
-        <dd>{num(c.totalLostHours)} / year</dd>
+        <dd>{num(data.campus.squareFeet)} sq. ft.</dd>
+        <dt>Combined workforce</dt>
+        <dd>{num(data.campus.workforce)} — individual sources below</dd>
+        <dt>Affected workforce equivalent</dt>
+        <dd>{num(data.campus.affectedFTEEquivalent)} (modeled exposure)</dd>
+        <dt>Displayed lost hours</dt>
+        <dd>
+          {num(
+            data.buildings.reduce(
+              (s, r) => s + scenario(r, cognitive).hours,
+              0,
+            ),
+          )}{" "}
+          per year
+        </dd>
       </dl>
       <p>{methodology.notes[6]}</p>
       {data.buildings.map((r, i) => (
@@ -92,47 +137,43 @@ export default function Results({ data }: { data: CalculationResponse }) {
             {r.input.name || `Building ${i + 1}`} ·{" "}
             {buildingConfig(r.input.type).label}
           </h3>
-          <p>
-            Estimated annual baseline:{" "}
-            <strong>{money(r.baselineQuietFinancialLoss)}</strong> · Five-year
-            baseline: <strong>{money(r.fiveYearBaselineLoss)}</strong>
-          </p>
+          <EquationJourney result={r} cognitive={cognitive} />
           <dl>
-            <dt>Gross building area</dt>
+            <dt>Building area</dt>
             <dd>{num(r.input.squareFeet)} sq. ft.</dd>
-            <dt>{r.workforce.unit}</dt>
-            <dd>{num(r.workforce.count)}</dd>
-            <dt>Workforce source</dt>
-            <dd>{r.workforce.source}</dd>
-            <dt>Methodology quality</dt>
+            <dt>Workforce source / unit</dt>
             <dd>
-              {r.workforce.quality} — describes the input method, not a
-              statistical confidence interval
+              {r.workforce.source} · {r.workforce.unit} ·{" "}
+              {num(r.workforce.count)}
+            </dd>
+            <dt>Source limitations</dt>
+            <dd>
+              {r.workforce.source === "User-provided FTE"
+                ? "User-entered; not independently verified"
+                : r.workforce.quality}
+              . This is not a statistical confidence interval.
             </dd>
             <dt>Coverage / dead zone</dt>
             <dd>
               {num(r.input.coverage)}% / {num(r.deadZoneRate * 100)}%
             </dd>
-            <dt>Affected FTE equivalent</dt>
+            <dt>Affected workforce equivalent</dt>
             <dd>{num(r.affectedFTEEquivalent)}</dd>
-            <dt>Direct connectivity</dt>
+            <dt>Direct time scenario</dt>
             <dd>
               {num(r.directLostHours)} hours · {money(r.directConnectivityLoss)}
             </dd>
-            <dt>Emotional/cognitive distraction</dt>
+            <dt>Optional cognitive comparison</dt>
             <dd>
               {num(r.emotionalLostHours)} hours ·{" "}
-              {money(r.emotionalCognitiveLoss)}
+              {money(r.emotionalCognitiveLoss)} —{" "}
+              {cognitive ? "included" : "excluded from the displayed scenario"}
             </dd>
-            <dt>Total lost hours</dt>
-            <dd>{num(r.totalLostHours)} / year</dd>
-            <dt>Hourly wage (wages only)</dt>
-            <dd>{rate(r.hourlyWage)}</dd>
             <dt>Wage industry / ownership</dt>
             <dd>
               {r.wage
                 ? `${r.wage.industryLabel} (NAICS ${r.wage.industry}); ${r.wage.ownershipLabel}`
-                : "No published record available"}
+                : "Unavailable"}
             </dd>
             <dt>Wage geography / year</dt>
             <dd>
@@ -141,25 +182,18 @@ export default function Results({ data }: { data: CalculationResponse }) {
             <dt>Wage lookup level</dt>
             <dd>
               {r.wage
-                ? `${r.wage.fallbackLevel}: ${r.wage.fallbackLabel}`
+                ? `${r.wage.fallbackLevel}: ${r.wage.fallbackLabel}${r.wage.industry !== buildingConfig(r.input.type).industries[0] ? " — broader industry fallback" : ""}`
                 : "All five levels exhausted"}
-              {r.wage &&
-              r.wage.industry !== buildingConfig(r.input.type).industries[0]
-                ? " — broader industry fallback"
-                : ""}
             </dd>
-            <dt>Connectivity context</dt>
+            <dt>Annual average pay</dt>
+            <dd>{r.wage ? money(r.wage.annualAveragePay) : "Unavailable"}</dd>
+            <dt>Wi-Fi context</dt>
             <dd>
-              Reliable Wi-Fi / Wi-Fi Calling: {r.input.wifi}. No financial
-              adjustment applied.
+              {r.input.wifi}. No financial adjustment applied. Reliable Wi-Fi
+              Calling may reduce some effects; the size of any reduction is
+              unknown.
             </dd>
           </dl>
-          {r.wage && (
-            <p>
-              <a href={r.wage.sourceUrl}>BLS wage source</a> · Annual average
-              pay: {money(r.wage.annualAveragePay)}
-            </p>
-          )}
           {r.workforce.record && (
             <p>
               <a href={r.workforce.record.url}>
@@ -173,12 +207,6 @@ export default function Results({ data }: { data: CalculationResponse }) {
               <li key={n}>{n}</li>
             ))}
           </ul>
-          {["Yes", "Partially"].includes(r.input.wifi) && (
-            <p>
-              Reliable Wi-Fi Calling may reduce some effects of cellular loss.
-              The size of any reduction is not known.
-            </p>
-          )}
           <details>
             <summary>
               How We Calculated This — {r.input.name || `Building ${i + 1}`}
@@ -186,57 +214,43 @@ export default function Results({ data }: { data: CalculationResponse }) {
             <ol>
               <li>
                 Workforce: {num(r.workforce.count)} from {r.workforce.source}.
-                Building area: {num(r.input.squareFeet)} sq. ft.
               </li>
               <li>
-                Dead zone: 1 − ({num(r.input.coverage)} / 100) ={" "}
+                Uncovered fraction: 1 − ({num(r.input.coverage)} ÷ 100) ={" "}
                 {num(r.deadZoneRate)}.
               </li>
               <li>
-                Affected FTE equivalent: {num(r.workforce.count)} ×{" "}
+                Affected equivalent: {num(r.workforce.count)} ×{" "}
                 {num(r.deadZoneRate)} = {num(r.affectedFTEEquivalent)}.
               </li>
               <li>
-                Direct lost hours: {num(r.affectedFTEEquivalent)} ×{" "}
+                Direct hours: {num(r.affectedFTEEquivalent)} ×{" "}
                 {methodology.directLostHours} = {num(r.directLostHours)}.
               </li>
               <li>
-                Emotional/cognitive hours per fully affected FTE:{" "}
-                {methodology.annualFteHours} ×{" "}
+                Optional cognitive hours: {methodology.annualFteHours} ×{" "}
                 {methodology.emotionalCognitiveFraction * 100}% ={" "}
-                {cognitiveHours}.
+                {cognitiveHours} per fully affected equivalent;{" "}
+                {cognitive ? "included" : "excluded"}.
               </li>
               <li>
-                Emotional/cognitive lost hours: {num(r.affectedFTEEquivalent)} ×{" "}
-                {cognitiveHours} = {num(r.emotionalLostHours)}.
+                Selected lost hours: {num(scenario(r, cognitive).hours)}. Hourly
+                wage: annual average pay ÷ {methodology.annualFteHours}.
               </li>
               <li>
-                Total lost hours: {num(r.directLostHours)} +{" "}
-                {num(r.emotionalLostHours)} = {num(r.totalLostHours)}.
+                Annual scenario: {num(scenario(r, cognitive).hours)} ×{" "}
+                {r.hourlyWage === null ? "unavailable wage" : num(r.hourlyWage)}{" "}
+                = {money(scenario(r, cognitive).annual)}.
               </li>
               <li>
-                Hourly wage:{" "}
-                {r.wage
-                  ? `${money(r.wage.annualAveragePay)} / ${methodology.annualFteHours} = ${rate(r.hourlyWage)}`
-                  : "Unavailable after the documented fallback hierarchy."}
-              </li>
-              <li>
-                Baseline loss: {num(r.totalLostHours)} hours ×{" "}
-                {rate(r.hourlyWage)} = {money(r.baselineQuietFinancialLoss)} /
-                year.
-                {r.totalLostHours === 0 && !r.wage
-                  ? " Zero lost hours produces zero modeled loss even without a wage record."
-                  : ""}
-              </li>
-              <li>
-                Five-year loss: {money(r.baselineQuietFinancialLoss)} ×{" "}
-                {methodology.projectionYears} = {money(r.fiveYearBaselineLoss)}.
+                Five-year scenario: annual × {methodology.projectionYears} ={" "}
+                {money(scenario(r, cognitive).fiveYear)}.
               </li>
             </ol>
             <p>
-              Displayed numbers are rounded for readability; calculations use
-              unrounded values. The baseline excludes unquantified experience,
-              reputation, service-recovery and revenue impacts.
+              Displayed dollars are rounded; calculations use unrounded numbers.
+              If lost hours are zero, the modeled dollars are zero even without
+              a wage record.
             </p>
           </details>
           <details>
@@ -255,6 +269,28 @@ export default function Results({ data }: { data: CalculationResponse }) {
           </details>
         </article>
       ))}
+      <section id="signal-survey" className="survey-checklist">
+        <h2>Your in-building signal survey checklist</h2>
+        <ol>
+          <li>List buildings, floors and occupied areas to check.</li>
+          <li>
+            Check each carrier people use. One carrier's result does not
+            describe all carriers.
+          </li>
+          <li>
+            Test usable calling and connectivity in important locations. Record
+            the date and method.
+          </li>
+          <li>
+            Ask the survey provider how measured results translate into usable
+            floor-area coverage for each building.
+          </li>
+          <li>
+            Update this calculator. A signal survey improves the coverage input;
+            it does not measure financial loss.
+          </li>
+        </ol>
+      </section>
       <details>
         <summary>Model assumptions and limits</summary>
         <ul>
@@ -264,10 +300,11 @@ export default function Results({ data }: { data: CalculationResponse }) {
         </ul>
       </details>
       <p>
-        Methodology {data.methodologyVersion} · Wage dataset{" "}
-        {data.wageDataset.version} · Data year {data.wageDataset.year} ·
-        Calculated {new Date(data.calculatedAt).toLocaleString("en-US")}.
-        Coverage and wage rates are not averaged across buildings.
+        Engine methodology {data.methodologyVersion} · Educational presentation
+        2.1 · Wage dataset {data.wageDataset.version} · Data year{" "}
+        {data.wageDataset.year} · Calculated{" "}
+        {new Date(data.calculatedAt).toLocaleString("en-US")}. Each building is
+        calculated independently.
       </p>
     </>
   );

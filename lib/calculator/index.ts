@@ -16,7 +16,7 @@ export function calculateBuilding(
   const directLostHours = affectedFTEEquivalent * methodology.directLostHours;
   const emotionalLostHours = affectedFTEEquivalent * cognitiveHours;
   const totalLostHours = directLostHours + emotionalLostHours;
-  const wage = lookupWage(input.type, geo, wages);
+  const wage = lookupWage(input.type, geo, wages, input.ownership);
   const hourlyWage = wage
     ? wage.annualAveragePay / methodology.annualFteHours
     : null;

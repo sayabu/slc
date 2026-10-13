@@ -15,6 +15,8 @@ type Draft = {
   wifi: "Yes" | "Partially" | "No" | "Unknown";
   facilityRecordId: string;
   facilityScopeConfirmed: boolean;
+  ownership: string;
+  administrativeUseConfirmed: boolean;
 };
 const blank = (id: string): Draft => ({
   id,
@@ -27,6 +29,8 @@ const blank = (id: string): Draft => ({
   wifi: "Unknown",
   facilityRecordId: "",
   facilityScopeConfirmed: false,
+  ownership: "",
+  administrativeUseConfirmed: false,
 });
 async function post(url: string, body: unknown) {
   const r = await fetch(url, {
@@ -59,7 +63,12 @@ export default function CalculatorForm() {
               ...b,
               [key]: value,
               ...(key === "type"
-                ? { facilityRecordId: "", facilityScopeConfirmed: false }
+                ? {
+                    facilityRecordId: "",
+                    facilityScopeConfirmed: false,
+                    ownership: "",
+                    administrativeUseConfirmed: false,
+                  }
                 : {}),
             }
           : b,
@@ -112,6 +121,7 @@ export default function CalculatorForm() {
           fte: b.fte === "" ? undefined : Number(b.fte),
           headcount: b.headcount === "" ? undefined : Number(b.headcount),
           facilityRecordId: b.facilityRecordId || undefined,
+          ownership: b.ownership || undefined,
         })),
       });
       setResult(data);
@@ -271,10 +281,50 @@ export default function CalculatorForm() {
                 </label>
               </div>
               <p id={b.id + "-coverage"}>
-                0% means no usable cellular signal indoors. 100% means usable
-                cellular service throughout. You control this input; the
-                calculator does not estimate coverage.
+                Start at 0% to explore no usable cellular signal indoors. This
+                is a scenario, not a measurement. Enter the extent of coverage
+                you may currently have. 100% means usable cellular service
+                throughout. You control this input; the calculator does not
+                estimate coverage.
               </p>
+              <label>
+                Employer ownership / wage match
+                <select
+                  required
+                  value={b.ownership}
+                  onChange={(e) => update(b.id, "ownership", e.target.value)}
+                >
+                  <option value="">Select ownership, or choose unknown</option>
+                  <option value="5">Private (including nonprofit)</option>
+                  <option value="1">Federal government</option>
+                  <option value="2">State government</option>
+                  <option value="3">Local government</option>
+                  <option value="0">
+                    Unknown — use all-ownership published average
+                  </option>
+                </select>
+              </label>
+              <p>
+                This matches the published wage cohort. If the specific cohort
+                is unavailable, the disclosed all-industry fallback may be used.
+              </p>
+              {b.type === "government" && !b.fte && !b.headcount && (
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={b.administrativeUseConfirmed}
+                    onChange={(e) =>
+                      update(
+                        b.id,
+                        "administrativeUseConfirmed",
+                        e.target.checked,
+                      )
+                    }
+                  />{" "}
+                  This is an administrative office building. Other government
+                  uses need a staff count.
+                </label>
+              )}
               <div className="fields">
                 <label>
                   Annual Employee FTEs (optional)

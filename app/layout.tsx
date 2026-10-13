@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head><link rel="stylesheet" href="/brand/fonts.css" /></head>
+      <head>
+        <link rel="stylesheet" href="/brand/fonts.css" />
+      </head>
       <body>
         <a className="skip-link" href="#main">
           Skip to content
@@ -21,6 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Link>
           <nav aria-label="Main navigation">
             <Link href="/">Calculator</Link>{" "}
+            <Link href="/model">How the model works</Link>
             <Link href="/methodology">Research &amp; Methodology</Link>
           </nav>
         </header>

@@ -23,8 +23,11 @@ export default async function Methodology() {
         behavior, or a guaranteed return on a DAS investment.
       </p>
       <p>
-        Direct loss: {methodology.directLostHours} hours. Emotional/cognitive
-        allowance: {methodology.emotionalCognitiveFraction * 100}% ×{" "}
+        The educational display starts with direct time only. The optional
+        cognitive comparison is excluded unless selected. The engine retains
+        both components separately for traceability. Direct loss:{" "}
+        {methodology.directLostHours} hours. Emotional/cognitive allowance:{" "}
+        {methodology.emotionalCognitiveFraction * 100}% ×{" "}
         {methodology.annualFteHours} = {cognitiveHours} hours. Combined:{" "}
         {methodology.directLostHours + cognitiveHours} hours per fully affected
         workforce equivalent annually.
@@ -96,9 +99,10 @@ export default async function Methodology() {
       </div>
       <p>
         QCEW ownership codes: 0 = all ownerships, 2 = state government, 3 =
-        local government, 5 = private industry. Ownership is fixed in
-        configuration for each building type. Review suitability for private
-        schools, private universities, federal facilities and public hospitals.
+        local government, 5 = private industry, 1 = federal government. The user
+        selects ownership; unknown uses an all-ownership average. The table
+        shows legacy defaults for API requests without an ownership selection.
+        Actual wage ownership and fallback are disclosed in results.
       </p>
       <h2>Wage fallback order</h2>
       <ol>

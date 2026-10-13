@@ -71,6 +71,7 @@ export function lookupWage(
   type: string,
   geo: Geography,
   records: WageRecord[],
+  ownership?: WageRecord["ownership"],
 ): Wage | null {
   const config = buildingConfig(type);
   const levels = [
@@ -78,19 +79,19 @@ export function lookupWage(
       area: geo.stateFips + geo.countyFips,
       name: geo.county,
       industries: config.industries,
-      own: config.ownership,
+      own: ownership ?? config.ownership,
     },
     {
       area: geo.stateFips + "000",
       name: geo.state,
       industries: config.industries,
-      own: config.ownership,
+      own: ownership ?? config.ownership,
     },
     {
       area: "US000",
       name: "United States",
       industries: config.industries,
-      own: config.ownership,
+      own: ownership ?? config.ownership,
     },
     {
       area: geo.stateFips + geo.countyFips,

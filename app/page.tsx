@@ -12,10 +12,12 @@ export default async function Page() {
           <br className="desktop-break" /> Loss Calculator
         </h1>
         <p className="subtitle">
-          Estimate the hidden financial impact of poor indoor cellular coverage.
+          Explore the possible value of staff time lost to poor indoor cellular
+          coverage.
         </p>
         <p className="principle">
-          Quantify what we can defend. Identify what we cannot yet quantify.
+          Start with zero coverage across the campus, then enter the coverage
+          you may have. This free educational model is not a verdict.
         </p>
       </div>
       {wages.status === "unavailable" && (
@@ -25,6 +27,11 @@ export default async function Page() {
           QCEW data is imported. No sample wages are used.
         </p>
       )}
+      <p>
+        <a className="model-link" href="/model">
+          Follow the equation: a visual guide →
+        </a>
+      </p>
       <CalculatorForm />
     </>
   );

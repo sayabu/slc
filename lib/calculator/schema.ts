@@ -14,6 +14,8 @@ export const buildingSchema = z.object({
   coverage: z.number().finite().min(0).max(100),
   fte: positive.optional(),
   headcount: positive.int().optional(),
+  ownership: z.enum(["0", "1", "2", "3", "5"]).optional(),
+  administrativeUseConfirmed: z.boolean().optional(),
   wifi: z.enum(["Yes", "Partially", "No", "Unknown"]).default("Unknown"),
   facilityRecordId: z.string().max(100).optional(),
   facilityScopeConfirmed: z.boolean().default(false),

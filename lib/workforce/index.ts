@@ -66,6 +66,10 @@ export function resolveWorkforce(
       record,
     };
   const b = buildingConfig(input.type);
+  if (input.type === "government" && !input.administrativeUseConfirmed)
+    throw new Error(
+      "Confirm administrative office use before using the government office-size estimate, or enter FTE/headcount for other uses.",
+    );
   if (!b.density)
     throw new Error(
       "Enter Annual Employee FTEs or Employee Headcount. No defensible building-size benchmark is configured for this building type.",

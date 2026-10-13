@@ -462,7 +462,164 @@ tbody th {
     margin-right: 0;
   }
 }
+.model-link {
+  display: inline-block;
+  background: var(--yellow);
+  padding: 0.8rem 1.2rem;
+  font-weight: 700;
+}
+.explorer-controls,
+.survey-checklist {
+  background: var(--paper);
+  padding: 2rem;
+  margin: 2rem 0;
+  border-top: 6px solid var(--blue);
+}
+.explorer-controls input[type="range"] {
+  accent-color: var(--orange);
+  padding: 0;
+}
+.equation-journey {
+  margin: 2rem 0;
+}
+.equation-journey h2 {
+  font-size: clamp(1.7rem, 3vw, 3rem);
+}
+.equation-chain {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.4rem;
+  margin: 2rem 0 0;
+}
+.equation-step {
+  position: relative;
+  min-width: 0;
+}
+.equation-times {
+  position: absolute;
+  left: -1.1rem;
+  top: 40%;
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+.equation-block {
+  height: 100%;
+  padding: 1.35rem;
+  border-top: 6px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.equation-block.yellow {
+  background: var(--yellow);
+}
+.equation-block.blue {
+  background: var(--blue);
+}
+.equation-block.rose {
+  background: var(--rose);
+}
+.equation-block.orange {
+  background: var(--orange);
+}
+.equation-block strong {
+  font-family: var(--title);
+  font-size: clamp(1.5rem, 2.4vw, 2.7rem);
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.equation-block .eyebrow {
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+.equation-block p {
+  font-size: 1rem;
+}
+.equation-block a {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-top: auto;
+}
+.equation-answer {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--ink);
+  color: var(--yellow);
+  padding: 2rem;
+}
+.equation-answer > span {
+  font-size: 4rem;
+}
+.equation-answer strong {
+  display: block;
+  font-family: var(--title);
+  font-size: clamp(2rem, 4vw, 4rem);
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.equation-answer p:last-child {
+  color: white;
+  max-width: 65ch;
+}
+.equation-caption {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.survey-callout {
+  background: var(--blue);
+  border-left: 12px solid var(--ink);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.survey-callout h2 {
+  margin-top: 0.5rem;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+}
+.survey-callout a {
+  font-weight: 700;
+}
+.scenario-choice {
+  background: var(--yellow);
+  padding: 1rem;
+}
+@media (max-width: 950px) {
+  .equation-chain {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.8rem;
+  }
+  .equation-times {
+    display: none;
+  }
+  .equation-step:not(:first-child)::before {
+    content: "×";
+    position: absolute;
+    top: -1.8rem;
+    left: 1rem;
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 640px) {
+  .equation-chain {
+    grid-template-columns: 1fr;
+  }
+  .equation-block strong {
+    font-size: 2.5rem;
+  }
+  .equation-answer,
+  .explorer-controls,
+  .survey-callout {
+    padding: 1.25rem;
+  }
+}
 @media print {
+  .equation-chain {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .equation-block,
+  .equation-answer,
+  .survey-callout {
+    print-color-adjust: exact;
+  }
   body {
     background: white;
     color: black;
